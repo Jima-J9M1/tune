@@ -2,6 +2,7 @@ import styled from "@emotion/styled"
 import { color, flex, grid, layout, space, typography } from "styled-system"
 import { Title } from "../common/Title"
 import { Link } from "react-router-dom"
+export const image = "https://firebasestorage.googleapis.com/v0/b/tune-32543.appspot.com/o/file%2Fpexels-tima-miroshnichenko-6670756.jpg?alt=media&token=6c68a7ae-22a7-4d3b-8273-d5bebac0d755";
 
 const PopularSong = styled.div`
       display:flex;
@@ -48,6 +49,7 @@ export const SongCard = styled.div`
 export const SongImage = styled.img`
       width: 100%;
       object-fit:cover;
+      object-position:50% -50%;
       height:400px;
       border-radius:0px 0px 30px 30px;
       box-shadow:0 2px 12px black;
@@ -104,7 +106,7 @@ const Popular = ({header}) => {
             width={[1,3/4,3/4,6/7]}
             >
             <SongImage
-             src="https://c4.wallpaperflare.com/wallpaper/218/930/510/bruno-mars-musician-singer-wallpaper-preview.jpg"
+             src={image}
              width={[1]}
              />
             <SongTitle>
@@ -124,7 +126,7 @@ const Popular = ({header}) => {
             width={[1,3/4,3/4,6/7]}
             >
             <SongImage
-             src="https://c4.wallpaperflare.com/wallpaper/218/930/510/bruno-mars-musician-singer-wallpaper-preview.jpg"
+             src={image}
              width={[1]}
              />
             <SongTitle>
@@ -145,7 +147,7 @@ const Popular = ({header}) => {
             width={[1,3/4,3/4,6/7]}
             >
             <SongImage
-             src="https://c4.wallpaperflare.com/wallpaper/218/930/510/bruno-mars-musician-singer-wallpaper-preview.jpg"
+             src={image}
              width={[1]}
              />
             <SongTitle>

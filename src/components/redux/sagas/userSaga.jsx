@@ -5,8 +5,8 @@ import { collection, getDocs } from "firebase/firestore";
 
 export function* fetchUserSaga (){
     try{
-        // yield put(fetchUserList(true));
-        // console.log("true");
+        yield put(fetchUserList(true));
+        console.log("true");
         const userCollectionRef = collection(firestore, 'users');
         const snapshot = yield call(getDocs, userCollectionRef);
         const users = snapshot.docs.map(doc => doc.data());
