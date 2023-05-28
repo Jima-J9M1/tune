@@ -116,10 +116,10 @@ const ModalForm = ({modalOpen, closeModal}) =>{
           if(name === "audio"){
             console.log(file_value.type)
               if(file_value.type === "audio/mpeg" || file_value.type === "audio/mp3" || file_value.type === "audio/ogg"){
-                const max_size_limit = (1024 * 1024) * 5
+                const max_size_limit = (1024 * 1024) * 10
     
                 if(file_value.size > max_size_limit){
-                    setError({...error, [name]:`File size exceeds the maximum limit of ${max_size_limit}MB for ${file_value.name}`})
+                    setError({...error, [name]:`File size exceeds the maximum limit of ${max_size_limit/(1024 * 1024)}MB for ${file_value.name}`})
                 }else{
                   setError({...error, [name]:""})
                   setFile({...file, [name]:event.target.files[0]})
