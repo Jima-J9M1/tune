@@ -16,11 +16,10 @@ function App() {
           <Route element={<Singup />} path='/singup'/>
           <Route element={<ProtectedRoute />}>
           <Route element={<Home />} path='/'/>
-          <Route element={<DetailedSongView />} path='/song/1'/>
+          <Route element={<DetailedSongView />} path='/song/:id'/>
           </Route>
       </Routes>
       </Router>
-    // </Body>
   )
 }
 

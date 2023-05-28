@@ -1,6 +1,6 @@
 import { getDownloadURL,ref, uploadBytes } from "firebase/storage";
 import { firestore, storage } from "./firebase";
-import {collection, addDoc, serverTimestamp, doc, setDoc } from "firebase/firestore";
+import {collection, addDoc, serverTimestamp, doc, setDoc, getDocs } from "firebase/firestore";
 import { createUserWithEmailAndPassword,getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 
@@ -126,22 +126,13 @@ export const singout = async ()=>{
 }
 
 
-// export const isAuthenticate = () => {
-//     return new Promise((resolve, reject) => {
-//       const auth = getAuth();
-  
-//       onAuthStateChanged(auth, (user) => {
-//         if (user) {
-//           // User is authenticated
-//           resolve(user);
-//         } else {
-//           // User is not authenticated
-//           resolve(null);
-//         }
-//       }, (error) => {
-//         // An error occurred during authentication check
-//         reject(error);
-//       });
-//     });
-//   };
+export const fetchUser =  async() => {
+            
+    const userCollectionRef = collection(firestore, 'users');
+    const snapshot = await getDocs(userCollectionRef);
+    const users = snapshot.docs.map(doc => doc.data());
+
+    return users
+
+}
 

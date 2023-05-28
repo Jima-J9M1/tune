@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { color, layout, space } from "styled-system";
-import { StyledButton } from "../common/Button";
 
 const ModalStyle = styled.div`
       position:fixed;
@@ -21,7 +20,7 @@ const ModalStyle = styled.div`
 
 const ModalContentStyle = styled.div`
       background-color:white;
-      // width:50%;
+      // width:25%;
       padding:20px;
       border-radius:8px;
       margin:auto;
@@ -30,19 +29,20 @@ const ModalContentStyle = styled.div`
       ${layout}
 `
 
-const Modal = ({isOpen, isClosed, children})=>{
+
+ 
+const Modal = ({isOpen, children})=>{
    if(!isOpen){
     return null
    }
 
    return(
     <ModalStyle>
-       <ModalContentStyle width={[1,3/4,3/4,1/2]}>
+       <ModalContentStyle width={[1,3/4,3/4,2/5]}>
+        
+        
         {children}
 
-        <StyledButton onClick={isClosed}>
-            Closed
-        </StyledButton>
 
 
        </ModalContentStyle>

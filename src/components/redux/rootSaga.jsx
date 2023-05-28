@@ -1,8 +1,9 @@
-import { userWatcherSaga } from "./sagas/userWatcherSaga";
+import { songWatcherSaga, userWatcherSaga} from "./sagas/userWatcherSaga";
 import { all } from "redux-saga/effects";
 
 export default function* rootSaga() {
     yield all([
-        userWatcherSaga,
+        userWatcherSaga(),
+        songWatcherSaga()
     ])
 }

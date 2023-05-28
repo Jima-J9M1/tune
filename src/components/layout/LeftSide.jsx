@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
-import { color, flex, grid, layout, space, typography } from "styled-system";
+import { color, flex, grid, layout, order, space, typography } from "styled-system";
 import { Title } from "../common/Title";
 
 const SideContainer = styled.div`
+    position:stricky;
     display: flex;
     justify-content: flex-start;
     flex-direction:column;
@@ -11,6 +12,7 @@ const SideContainer = styled.div`
     bottom:0;
     // background-color: #fff;
     margin-top:15px;
+    ${order}
     ${color}
     ${space}
     ${layout}
@@ -38,9 +40,9 @@ const ImagLayout = styled.img`
      margin-right:12px;
 `
 
-const LeftSide = () =>{
+const LeftSide = ({order,songs}) =>{
     return(
-        <SideContainer p={3} w={[]}>
+        <SideContainer p={3} order={order}>
             <Title fontSize={26}>
             My playlist
             </Title>

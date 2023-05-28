@@ -1,8 +1,12 @@
 import styled from "@emotion/styled";
-import { color, flex, grid, layout, space, typography } from "styled-system";
+import { color, flex, grid, layout, order, space, typography } from "styled-system";
 import { Title } from "../common/Title";
 import { Link } from "react-router-dom";
 import { SongArtist, SongCard, SongImage, SongTitle } from "./PopularSong";
+import { StyledButton } from "../common/Button";
+import {HiPlus} from "react-icons/hi"
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const SideContainer = styled.div`
     // display: flex;
@@ -13,7 +17,9 @@ const SideContainer = styled.div`
     // bottom:0;
     // // background-color: #fff;
     // margin-top:15px;
+    // height:100%;
     width:300px;
+    ${order}
     ${color}
     ${space}
     ${layout}
@@ -41,9 +47,17 @@ const ImagLayout = styled.img`
      margin-right:12px;
 `
 
-const RightSide = () =>{
+const RightSide = ({openModal, order,songs}) =>{
+    // const songs = useSelector(state=>state.song.songs)
+
+
+    console.log(songs)
     return(
-        <SideContainer p={4}>
+        <SideContainer p={4} order={order}>
+        <StyledButton onClick={openModal} width={1} bg="green">
+        <HiPlus width={12} />
+          Add Song
+        </StyledButton>
             <Title fontSize={[28,16]}>
             New Song
             </Title>
@@ -55,14 +69,13 @@ const RightSide = () =>{
             width={[6/7]} m="auto"
             >
             <SongImage
-             src="https://c4.wallpaperflare.com/wallpaper/218/930/510/bruno-mars-musician-singer-wallpaper-preview.jpg"
-             width={[1]}
+             src=""
              />
             <SongTitle>
-                Grend
+                songs[0].title
             </SongTitle>
             <SongArtist>
-                Bruno Mars
+                songs[0].artist
             </SongArtist>
             </SongCard>
            </Link>

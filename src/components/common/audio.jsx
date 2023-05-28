@@ -39,9 +39,9 @@ const AudioButton = styled.button`
    
 `
 
-const AudioLayout = () =>{
+const AudioLayout = ({source}) =>{
 
-
+  console.log(source)
   const audioPlayRef = useRef(null);
   const [tooglePlay, setTooglePlay] = useState(true);
 
@@ -90,9 +90,11 @@ const AudioLayout = () =>{
     <AudioButton>
     <MdDelete color="#DC3A3A"size={30}/>
     </AudioButton>
-
+      {console.log(typeof(source))}
         <audio  ref={audioPlayRef} >
-          <source src="https://firebasestorage.googleapis.com/v0/b/tune-32543.appspot.com/o/file%2Faudio%2F1684608971254_christ.mp3?alt=media&token=89c00649-a4f8-4f2b-b779-4642ed0cffb4"  />
+          <source src={`${source}.mp3`} type="audio/mpeg" />
+          <source src={`${source}.ogg`} type="audio/ogg" />
+          <source src={`${source}.wav`} type="audio/wav" />
         </audio>
       </AudioContainer>
     )

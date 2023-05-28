@@ -1,8 +1,11 @@
 import styled from "@emotion/styled";
-import singerImage  from '../../assets/image/singerImage.jpg';
-import { StyledButton } from "../common/Button";
 import Popular from "../layout/PopularSong";
 import AudioLayout from "../common/audio";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchUserList } from "../redux/slices/userSlice";
+import { fetchSongList } from "../redux/slices/songSlice";
 
 const Body = styled.div`
      width:100vw;
@@ -16,12 +19,12 @@ const SongDetailsContainer = styled.div`
   width:100%;
   display:flex;
   flex-direction:column;
-  items-align:center;
+  // align-items:center;
   justify-content:end;
-  background-image:url(${singerImage});
-  background-size:cover;
-  background-position:center 0;
-  height:400px;
+  background-image:url(${props => props.image});
+  background-size:100% auto;
+  background-position:center;
+  height:500px;
 `;
 
 
@@ -54,11 +57,6 @@ const SongArtist = styled.p`
   font-weight:bold;
 `;
 
-// const SongAlbum = styled.p`
-//   font-size: 16px;
-//   color: #999999;
-// `;
-
 const SongDescription = styled.p`
   font-size: 16px;
   margin-top: 20px;
@@ -71,22 +69,60 @@ const ButtonLayout = styled.div`
       
 `
 const DetailedSongView = () => {
-  
+  const [data,setData] = useState([])
+  const [relativeSong,setRelativeSong] = useState([])
 
-  return (
-    <Body>
-    <SongDetailsContainer>
+  const dispatch = useDispatch()
+  const songs = useSelector((state)=> state.song.songs)
+
+  const {id} = useParams()
+
+  const fetchUser = (songs,id) =>{
+    return songs.find((song)=>{
+      return song.id === `${id}`
+    })
+  }
+  
+  useEffect(()=>{
+    dispatch(fetchUserList())
+    dispatch(fetchSongList())
+    const result = fetchUser(songs,id);
+    const relativesong = relative(result)
+    setRelativeSong(relativesong)
+    setData(result)
+  },[dispatch])
+
+  
+  const relative = (music)=>{
+    const currentSongId = music.id;
+    const currentSongUid = music.uid;
+    const relativeSong = songs.filter((song) => song.id === currentSongId)
+    return relativeSong
+}
+
+  const dataForm = () =>(
+    data &&   
+      <Body>
+        {/* {JSON.stringify(data)} */}
+        {/* {JSON.stringify(relativeSong)} */}
+    <SongDetailsContainer image={data.image}>
       <SongDetails>
-      <SongTitle>Sarboy</SongTitle>
-      <SongArtist>Weekend</SongArtist>
-      <SongDescription>The weekend Ethiopian american famous singer in the world. 
-        Starboy is talking about the boy who has nothing before and become one of the popular people in the world. 
+      <SongTitle>{data.title}</SongTitle>
+      <SongArtist>{data.artist}</SongArtist>
+      <SongDescription>{data.body}
       </SongDescription>
       </SongDetails>
-      <AudioLayout />
+      <AudioLayout source={data.audio} />
     </SongDetailsContainer>
-    <Popular header={"Relative Songs"}/>
+    {relativeSong && <Popular header={"Relative Songs"} songs={relativeSong}/>}
+    {/* <Popular header={"Relative Songs"} songs={songs}/> */}
     </Body>
+    
+  )
+ 
+  return (
+
+     dataForm()
   );
 };
 

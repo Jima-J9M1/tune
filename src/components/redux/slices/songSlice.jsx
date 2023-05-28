@@ -43,9 +43,12 @@ const songSlice = createSlice({
             if(indexOfSong != -1){
                 state.songs[indexOfSong] = updateSong
             }
-        }
-    }
-})
+        },
+  }
+
+}
+
+)
 
 export const {
     fetchSongFailer,

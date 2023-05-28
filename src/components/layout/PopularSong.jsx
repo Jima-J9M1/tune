@@ -2,6 +2,7 @@ import styled from "@emotion/styled"
 import { color, flex, grid, layout, space, typography } from "styled-system"
 import { Title } from "../common/Title"
 import { Link } from "react-router-dom"
+import { useSelector } from "react-redux";
 export const image = "https://firebasestorage.googleapis.com/v0/b/tune-32543.appspot.com/o/file%2Fpexels-tima-miroshnichenko-6670756.jpg?alt=media&token=6c68a7ae-22a7-4d3b-8273-d5bebac0d755";
 
 const PopularSong = styled.div`
@@ -81,7 +82,8 @@ export const SongArtist = styled.p`
 
 
 
-const Popular = ({header}) => {
+const Popular = ({header,songs}) => {
+    // const songs = useSelector(state => state.song.songs)
     return(
         <>
         <Title>
@@ -99,65 +101,31 @@ const Popular = ({header}) => {
             gridTemplateColumns={['1fr', '1fr 1fr','1fr 1fr','1fr 1fr  1fr']}
             gridGap={2}
         >
-            <Link to="/song/1">
-            <SongCard
+        
+        {
+            songs.map((song,indx)=>(
+            <Link key={indx} to={`/song/${song.id}`}>
+                <SongCard
             
             
-            width={[1,3/4,3/4,6/7]}
-            >
-            <SongImage
-             src={image}
-             width={[1]}
-             />
-            <SongTitle>
-                Grend
-            </SongTitle>
-            <SongArtist>
-                Bruno Mars
-            </SongArtist>
-           </SongCard>
+                width={[1,3/4,3/4,6/7]}
+                >
+                <SongImage
+                src={song.image} 
+                width={[1]}
+                />
+                <SongTitle>
+                {song.title}
+
+                </SongTitle>
+                <SongArtist>
+               {song.artisit}
+
+                </SongArtist>
+            </SongCard>
            </Link>
-
-
-           <Link to="/song/1">
-            <SongCard
-            
-            
-            width={[1,3/4,3/4,6/7]}
-            >
-            <SongImage
-             src={image}
-             width={[1]}
-             />
-            <SongTitle>
-                Grend
-            </SongTitle>
-            <SongArtist>
-                Bruno Mars
-            </SongArtist>
-           </SongCard>
-           </Link>
-
-
-
-           <Link to="/song/1">
-            <SongCard
-            
-            
-            width={[1,3/4,3/4,6/7]}
-            >
-            <SongImage
-             src={image}
-             width={[1]}
-             />
-            <SongTitle>
-                Grend
-            </SongTitle>
-            <SongArtist>
-                Bruno Mars
-            </SongArtist>
-           </SongCard>
-           </Link>
+            ))
+        }
 
         </PopularSong>
         </>
