@@ -12,6 +12,8 @@ import { fetchUserList } from "../redux/slices/userSlice"
 import ModalForm from "../layout/ModalForm"
 import { Input } from "../common/Input"
 import {GiMusicSpell} from "react-icons/gi"
+import { doc, setDoc } from "firebase/firestore";
+import { firestore } from "../utils/firebase/firebase";
 
 
 const BodyContainer = styled.div`
@@ -28,6 +30,10 @@ const Body = styled.div`
   width:100vw;
   margin:0;
   padding:0;
+
+  @media(min-width: 1000px){
+    height:92.2vh;
+  }
   // overflow:scroll;
       ${color}
       ${space}
@@ -49,6 +55,11 @@ const StyledContainer = styled.div`
     // margin-left:30px;
     // border:1px solid red;
     // transform: scale(0.96);
+    @media (max-width: 1000px) {
+      /* Mobile view styles */
+      overflow: initial;
+    }
+    
     ${order}
     ${color}
     ${space}
@@ -83,6 +94,31 @@ const SearchAndButton = styled.div`
      ${space}
 `
 
+const DeletedMessage = styled.div`
+      color:black;
+`
+
+const Button = styled.div`
+     color: black;
+     background-color:white;
+     padding:2px;
+     border-radius:10px;
+     cursor:pointer;
+`
+const DeleteContainer = styled.div`
+    width:50%;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    text-align:center;
+    border:1px solid red;
+    background-color:rgba(255,0,0,0.3);
+    color:white;
+    padding:5px;
+    border-radius:10px;
+    margin-top:5px;
+`
+
 
 function Home() {
 
@@ -93,6 +129,7 @@ function Home() {
   const dispatch = useDispatch()
   
   const [modalOpen,setModalOpen] = useState()
+  const [showDeleteMessage,setShowDeletedMessage] = useState(false)
 
   useEffect(()=>{
     dispatch(fetchUserList());
@@ -104,8 +141,25 @@ function Home() {
     }  
 
     fetch();
+
+
+
+    const deletedData = localStorage.getItem("deletedData");
+    if (deletedData) {
+      setShowDeletedMessage(true);
+      clearDeletedData(); // Remove deleted data from local storage
+      setTimeout(() => {
+        setShowDeletedMessage(false);
+      }, 5000); // Hide message after 1 minute (60000 milliseconds)
+    }
+
     },[dispatch])
     
+
+
+    const clearDeletedData = () => {
+      localStorage.removeItem("deletedData");
+    };
 
     const openModal = ()=>{
       setModalOpen(true)
@@ -116,6 +170,23 @@ function Home() {
       setTimeout(300)
     }
 
+    const handleUndoDelete = () => {
+      const deletedData = JSON.parse(localStorage.getItem("deletedData"));
+      const collectionRef = doc(firestore, "song", deletedData.id);
+      setDoc(collectionRef, deletedData)
+        .then(() => {
+          console.log("Data restored successfully!");
+          // Perform any additional actions or show a success message
+        })
+        .catch((error) => {
+          console.error("Error restoring data:", error);
+          // Handle any errors that occur during the restoration process
+        });
+    
+      // Clear the deletedData from local storage after undoing
+      clearDeletedData();
+      clearDeletedData();
+    };
 
 
   
@@ -137,13 +208,20 @@ function Home() {
       placeItem="center"
       placeText="center"
       gridTemplateColumns={["1fr", "auto 2fr","auto 2fr","auto 2fr auto"]}
-      height={["100vh","100vh","100vh","92.2vh"]}
+      // height={["100vh","100vh","100vh","92.2vh"]}
       
       >
       <LeftSide order={[3,2,2,1]} songs={songs}
       />
       <StyledContainer order={[2,2,2,2]}>
-        
+        {showDeleteMessage &&
+        <DeleteContainer>
+        <DeletedMessage className="bg-red-300 text-red p-3">A song has been deleted.{" "}
+        </DeletedMessage>
+        <Button onClick={() => handleUndoDelete()}>Undo</Button>
+
+        </DeleteContainer>
+        }
         
 
         <ModalForm modalOpen={modalOpen} closeModal={closeModal}/>  

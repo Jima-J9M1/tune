@@ -1,11 +1,14 @@
 import styled from "@emotion/styled";
 import Popular from "../layout/PopularSong";
 import AudioLayout from "../common/audio";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { fetchUserList } from "../redux/slices/userSlice";
-import { fetchSongList } from "../redux/slices/songSlice";
+import { deleteSong, fetchSongList } from "../redux/slices/songSlice";
+import ModalForm from "../layout/ModalForm";
+import UpdateModalForm from "../layout/UpdateModalForm";
+import DeleteMessageModal from "../layout/DeleteModalMessage";
 
 const Body = styled.div`
      width:100vw;
@@ -68,9 +71,53 @@ const ButtonLayout = styled.div`
       // justify-content:space-around;
       
 `
+
+const userContext = createContext();
+
 const DetailedSongView = () => {
   const [data,setData] = useState([])
   const [relativeSong,setRelativeSong] = useState([])
+  const [modalOpen, setModalOpen] = useState(false);
+  const [showDeleteMessageModal, setshowDeleteMessageModal] = useState(false);
+  const navigate = useNavigate();
+
+
+  // useEffect(()=>{
+  //   const getDeletedData = localStorage.getItem('deletedData')
+
+  //   if(getDeletedData){
+  //     navigate("/")
+  //   }
+  // }, [showDeleteMessageModal])
+  const handleDeleteMessage =  () => {
+    const deletedData = { ...data };
+    console.log(deletedData)
+    localStorage.setItem("deletedData", JSON.stringify(deletedData));
+    dispatch(deleteSong(data.id));
+    // Perform delete operation here
+    setshowDeleteMessageModal(false);
+    navigate("/");
+  };
+
+  const handleCancelDelete = () => {
+    setshowDeleteMessageModal(false);
+  };
+
+  const handleOpenModal = () => {
+    setshowDeleteMessageModal(true);
+  };
+
+
+  const openModal = ()=>{
+    setModalOpen(true)
+  }
+
+  const closeModal = ()=>{
+    setModalOpen(false);
+    setTimeout(3000)
+  }
+
+
 
   const dispatch = useDispatch()
   const songs = useSelector((state)=> state.song.songs)
@@ -112,8 +159,15 @@ const DetailedSongView = () => {
       <SongDescription>{data.body}
       </SongDescription>
       </SongDetails>
-      <AudioLayout source={data.audio} />
+      <AudioLayout source={data.audio} openModal={openModal} deleteModal={handleOpenModal}/>
     </SongDetailsContainer>
+    {showDeleteMessageModal && (
+        <DeleteMessageModal
+          onCancel={handleCancelDelete}
+          onDelete={handleDeleteMessage}
+        />
+      )}
+    <UpdateModalForm modalOpen={modalOpen} closeModal={closeModal}/>  
     {relativeSong && <Popular header={"Relative Songs"} songs={relativeSong}/>}
     {/* <Popular header={"Relative Songs"} songs={songs}/> */}
     </Body>

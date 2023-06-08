@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {BsPauseFill as Pause} from 'react-icons/bs'
 import {BsPlayFill as Play} from 'react-icons/bs'
 import {VscDebugRestart as Restart} from 'react-icons/vsc'
@@ -39,11 +39,46 @@ const AudioButton = styled.button`
    
 `
 
-const AudioLayout = ({source}) =>{
+const AudioLayout = ({source, openModal,deleteModal}) =>{
 
   console.log(source)
   const audioPlayRef = useRef(null);
   const [tooglePlay, setTooglePlay] = useState(true);
+
+
+
+
+
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      // Check if the 'Space' key is pressed (you can change it to any desired key)
+      if (event.code === 'Space') {
+        event.preventDefault(); // Prevent the default behavior of the space key
+
+        const audioElement = audioPlayRef.current;
+        if (audioElement.paused) {
+          audioElement.play(); // Play the audio if it's paused
+          if(tooglePlay){
+            setTooglePlay(false)
+          }
+          // setTooglePlay(!tooglePlay)
+        } else {
+          audioElement.pause(); // Pause the audio if it's playing
+          setTooglePlay(true)
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+
+
 
   const handlePlayButton = () => {
     audioPlayRef.current.play();
@@ -69,6 +104,7 @@ const AudioLayout = ({source}) =>{
 
 
 
+
     return (
       <AudioContainer width={[1,2/3,2/3,1/3]} ml={[0,2,3]}>
     <AudioButton>
@@ -84,14 +120,14 @@ const AudioLayout = ({source}) =>{
     </AudioButton>
 
     <AudioButton >
-    <MdEdit color="#00D4FF"size={30} />
+    <MdEdit color="#00D4FF"size={30} onClick={openModal}/>
     </AudioButton>
 
     <AudioButton>
-    <MdDelete color="#DC3A3A"size={30}/>
+    <MdDelete color="#DC3A3A"size={30} onClick={deleteModal}/>
     </AudioButton>
       {console.log(typeof(source))}
-        <audio  ref={audioPlayRef} >
+        <audio  ref={audioPlayRef}  >
           <source src={`${source}.mp3`} type="audio/mpeg" />
           <source src={`${source}.ogg`} type="audio/ogg" />
           <source src={`${source}.wav`} type="audio/wav" />

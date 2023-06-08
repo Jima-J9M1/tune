@@ -5,6 +5,7 @@ import Home from "./components/pages/Home"
 import Login from './components/pages/Login'
 import Singup from './components/pages/Singup'
 import ProtectedRoute from './ProtectedRoute'
+import UpdatePage from './components/pages/UpdateSong'
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
           <Route element={<Home />} path='/'/>
           <Route element={<DetailedSongView />} path='/song/:id'/>
+          <Route element={<UpdatePage />} path='/update/:id'/>
           </Route>
       </Routes>
       </Router>

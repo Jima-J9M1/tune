@@ -1,6 +1,6 @@
 import { getDownloadURL,ref, uploadBytes } from "firebase/storage";
 import { firestore, storage } from "./firebase";
-import {collection, addDoc, serverTimestamp, doc, setDoc, getDocs } from "firebase/firestore";
+import {collection, addDoc, serverTimestamp, doc, setDoc, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword,getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 
@@ -135,4 +135,28 @@ export const fetchUser =  async() => {
     return users
 
 }
+
+
+export const update = async (data) =>{
+    const songRef = doc(firestore, "song","ZOj00sP58s1HUeGSN9dk")
+
+    updateDoc(songRef,data, {merge:true})
+    .then(()=>console.log("updated successfully"))
+    .catch(err => console.log(err))
+
+}
+
+export const deleteSong = async (id) =>{
+    try{
+        const songRef = doc(firestore, "song","ZOj00sP58s1HUeGSN9dk")
+    
+        await deleteDoc(songRef)
+        .then(()=>console.log("deleted successfully"))
+        .catch(err => console.log(err))
+
+    }catch(err){
+        console.log(err)
+    }
+}
+
 
