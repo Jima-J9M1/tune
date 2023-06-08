@@ -14,6 +14,7 @@ import { Input } from "../common/Input"
 import {GiMusicSpell} from "react-icons/gi"
 import { doc, setDoc } from "firebase/firestore";
 import { firestore } from "../utils/firebase/firebase";
+import Spinner from "../common/Spinner";
 
 
 const BodyContainer = styled.div`

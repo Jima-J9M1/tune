@@ -91,7 +91,7 @@ const Popular = ({header,songs}) => {
         </Title>
         
         <PopularSong
-            p={4}
+            
             // bg="lightgray"
             color="black"
             display="grid"
@@ -108,7 +108,7 @@ const Popular = ({header,songs}) => {
                 <SongCard
             
             
-                width={[1,3/4,3/4,6/7]}
+                width={[4/6,3/4,3/4,6/7]}
                 >
                 <SongImage
                 src={song.image} 

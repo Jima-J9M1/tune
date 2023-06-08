@@ -9,6 +9,8 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addSong, fetchSongList } from "../redux/slices/songSlice";
 import {GrClose} from 'react-icons/gr'
+import Spinner from "../common/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const FormStyle = styled.div`
     display:flex;
@@ -33,6 +35,9 @@ const ErrorShow = styled.span`
 const ModalForm = ({modalOpen, closeModal}) =>{
     const user = localStorage.getItem("user");  
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate();
+
     const [data, setData] = useState({
         name:"",
         title:"",
@@ -85,7 +90,7 @@ const ModalForm = ({modalOpen, closeModal}) =>{
           setError({...error, name:"Please fill in all the fields"})
         }else{
         if(error.name === "" && error.title === "" && error.artist === "" && error.body === "" && error.image === "" && error.audio === ""){
-          
+          setLoading(true)
           const url = await handleSubmit(data, file.image,file.audio)
           setData({
             ...data,
@@ -93,6 +98,12 @@ const ModalForm = ({modalOpen, closeModal}) =>{
             audio:url[1],
             uid:user.uid,
           })
+
+          setLoading(false)
+          closeModal()
+          navigate('/')
+
+
     
           dispatch(addSong({...data,image:url[0],audio:url[1]}));
           dispatch(fetchSongList());
@@ -199,7 +210,7 @@ const ModalForm = ({modalOpen, closeModal}) =>{
       <Input type="file"  fontSize={15} onChange={handleFile("audio")} required placeholder="Auido"/>
       {error.audio && <ErrorShow color="red" fontSize={15}>{error.audio}</ErrorShow>}
     
-      <StyledButton onClick={handle_submit} width={1/2} m="auto">Save</StyledButton>
+      <StyledButton onClick={handle_submit} width={1/2} m="auto">{loading ? <Spinner />: 'save'}</StyledButton>
 
       </FormStyle>
 
