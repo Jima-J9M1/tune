@@ -32,7 +32,7 @@ const Body = styled.div`
   padding:0;
 
   @media(min-width: 1000px){
-    height:92.2vh;
+    height:100%;
   }
   // overflow:scroll;
       ${color}
