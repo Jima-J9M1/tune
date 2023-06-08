@@ -50,21 +50,21 @@ const LeftSide = ({order,songs}) =>{
            <FixedElement p={2}>
                <PlaylistLayout>
                 <ImagLayout src={Icon}/>
-                <Title fontSize={16}>Bruno Mars</Title>
+                <Title fontSize={16}>Music Title</Title>
                </PlaylistLayout>
            </FixedElement>
 
            <FixedElement p={2}>
                <PlaylistLayout>
                 <ImagLayout src={Icon}/>
-                <Title fontSize={16}>Bruno Mars</Title>
+                <Title fontSize={16}>Music Title</Title>
                </PlaylistLayout>
            </FixedElement>
 
            <FixedElement p={2}>
                <PlaylistLayout>
                 <ImagLayout src={Icon}/>
-                <Title fontSize={16}>Bruno Mars</Title>
+                <Title fontSize={16}>Music Title</Title>
                </PlaylistLayout>
            </FixedElement>
 

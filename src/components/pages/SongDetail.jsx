@@ -89,15 +89,7 @@ const DetailedSongView = () => {
   //     navigate("/")
   //   }
   // }, [showDeleteMessageModal])
-  const handleDeleteMessage =  () => {
-    const deletedData = { ...data };
-    console.log(deletedData)
-    localStorage.setItem("deletedData", JSON.stringify(deletedData));
-    dispatch(deleteSong(data.id));
-    // Perform delete operation here
-    setshowDeleteMessageModal(false);
-    navigate("/");
-  };
+  
 
   const handleCancelDelete = () => {
     setshowDeleteMessageModal(false);
@@ -164,7 +156,8 @@ const DetailedSongView = () => {
     {showDeleteMessageModal && (
         <DeleteMessageModal
           onCancel={handleCancelDelete}
-          onDelete={handleDeleteMessage}
+          id={id}
+          data={data}
         />
       )}
     <UpdateModalForm modalOpen={modalOpen} closeModal={closeModal}/>  

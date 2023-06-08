@@ -148,8 +148,8 @@ export const update = async (data) =>{
 
 export const deleteSong = async (id) =>{
     try{
-        const songRef = doc(firestore, "song","ZOj00sP58s1HUeGSN9dk")
-    
+        const songRef = doc(firestore, "song", id)
+        console.log(songRef)
         await deleteDoc(songRef)
         .then(()=>console.log("deleted successfully"))
         .catch(err => console.log(err))
@@ -158,5 +158,8 @@ export const deleteSong = async (id) =>{
         console.log(err)
     }
 }
+
+
+
 
 

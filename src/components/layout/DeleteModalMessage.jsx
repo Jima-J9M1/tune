@@ -1,8 +1,11 @@
 import styled from "@emotion/styled";
 import { space, color } from "styled-system";
 import { deleteSong } from "../utils/firebase/handlSubmit";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import Spinner from "../common/Spinner";
+import RedSpinner from "../common/RedSpinner";
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -56,15 +59,24 @@ const DeleteButton = styled(Button)`
   color: #ffffff;
 `;
 
-const DeleteMessageModal = ({ onCancel, onDelete }) => {
-    
+const DeleteMessageModal = ({ onCancel,id,data }) => {
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [isloading, setIsloading] = useState(false)
     const [success, setSuccess] = useState(false)
-    const handleDelete = async () => {
-        try{
 
+
+    const handleDelete =  async() => {
+        try{
+             
             setIsloading(true)
-            await deleteSong();
+            await deleteSong(id);
+            const deletedData = { ...data };
+
+            localStorage.setItem("deletedData", JSON.stringify(deletedData));
+            navigate("/");
+            dispatch(deleteSong(id));
+      // Perform delete operation here
             setIsloading(false)
             setSuccess(true)
             
@@ -79,11 +91,12 @@ const DeleteMessageModal = ({ onCancel, onDelete }) => {
 
    success ? <Navigate to="/" />: <ModalContainer>
       <ModalContent>
+        {isloading && <RedSpinner color="red"/>}
         <ModalTitle>Confirm Message Deletion</ModalTitle>
         <p>Are you sure you want to delete this message?</p>
         <ModalButtonsContainer>
           <CancelButton onClick={onCancel}>Cancel</CancelButton>
-          <DeleteButton onClick={onDelete}>Delete</DeleteButton>
+          <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
         </ModalButtonsContainer>
       </ModalContent>
     </ModalContainer>

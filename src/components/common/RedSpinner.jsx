@@ -31,7 +31,7 @@ const DotOne = styled.span`
     border-radius: 50%;
     left:-0.5em;
     top:-0.5em;
-    background-color:#ffffff;
+    background-color:red;
 `
 
 const DotTwo = styled.span`
@@ -42,7 +42,7 @@ position:absolute;
   border-radius: 50%;
   right:-0.5em;
   top:-0.5em;
-  background-color:#ffffff;
+  background-color:red;
 `
 
 const DotThree = styled.span`
@@ -53,7 +53,7 @@ position:absolute;
   border-radius: 50%;
   left:-0.5em;
   bottom:-0.5em;
-  background-color:#ffffff;
+  background-color:red;
 `
 const DotFour = styled.span`
 position:absolute;
@@ -63,7 +63,7 @@ position:absolute;
   border-radius: 50%;
    right:-0.5em;
     bottom:-0.5em;
-    background-color:#ffffff;
+    background-color:red;
 
   
 `
@@ -71,7 +71,7 @@ position:absolute;
 
 
 
-const Spinner = ()=>{
+const RedSpinner = ()=>{
     return(
         <SpinnerContainer>
             <DotOne ></DotOne>
@@ -82,4 +82,4 @@ const Spinner = ()=>{
     )
 }
 
-export default Spinner
+export default RedSpinner

@@ -72,10 +72,10 @@ const RightSide = ({openModal, order,songs}) =>{
              src={Icon}
              />
             <SongTitle>
-                songs[0].title
+                Music title
             </SongTitle>
             <SongArtist>
-                songs[0].artist
+                Artist
             </SongArtist>
             </SongCard>
            </Link>
