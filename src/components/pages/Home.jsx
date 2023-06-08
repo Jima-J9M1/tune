@@ -20,21 +20,20 @@ const BodyContainer = styled.div`
      width:100vw;
      background-color:white;
      height:100vh;
+
 `
 
 
 const Body = styled.div`
   background-color:#F9F9F9;
   color:black;
-  // height:92.2vh;
+  height:100vh;
   width:100vw;
   margin:0;
   padding:0;
 
-  @media(min-width: 1000px){
-    height:100%;
-  }
-  // overflow:scroll;
+  
+  overflow:scroll;
       ${color}
       ${space}
       ${layout}
