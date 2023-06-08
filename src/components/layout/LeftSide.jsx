@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { color, flex, grid, layout, order, space, typography } from "styled-system";
 import { Title } from "../common/Title";
-
+import Icon from '../../assets/image/singerImage.jpg'
 const SideContainer = styled.div`
     position:stricky;
     display: flex;
@@ -49,21 +49,21 @@ const LeftSide = ({order,songs}) =>{
 
            <FixedElement p={2}>
                <PlaylistLayout>
-                <ImagLayout src="https://c4.wallpaperflare.com/wallpaper/218/930/510/bruno-mars-musician-singer-wallpaper-preview.jpg"/>
+                <ImagLayout src={Icon}/>
                 <Title fontSize={16}>Bruno Mars</Title>
                </PlaylistLayout>
            </FixedElement>
 
            <FixedElement p={2}>
                <PlaylistLayout>
-                <ImagLayout src="https://c4.wallpaperflare.com/wallpaper/218/930/510/bruno-mars-musician-singer-wallpaper-preview.jpg"/>
+                <ImagLayout src={Icon}/>
                 <Title fontSize={16}>Bruno Mars</Title>
                </PlaylistLayout>
            </FixedElement>
 
            <FixedElement p={2}>
                <PlaylistLayout>
-                <ImagLayout src="https://c4.wallpaperflare.com/wallpaper/218/930/510/bruno-mars-musician-singer-wallpaper-preview.jpg"/>
+                <ImagLayout src={Icon}/>
                 <Title fontSize={16}>Bruno Mars</Title>
                </PlaylistLayout>
            </FixedElement>

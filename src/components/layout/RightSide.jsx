@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { SongArtist, SongCard, SongImage, SongTitle } from "./PopularSong";
 import { StyledButton } from "../common/Button";
 import {HiPlus} from "react-icons/hi"
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import Icon from '../../assets/image/singerImage.jpg'
+
 
 const SideContainer = styled.div`
     // display: flex;
@@ -69,7 +69,7 @@ const RightSide = ({openModal, order,songs}) =>{
             width={[6/7]} m="auto"
             >
             <SongImage
-             src=""
+             src={Icon}
              />
             <SongTitle>
                 songs[0].title
