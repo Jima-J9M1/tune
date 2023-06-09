@@ -1,5 +1,5 @@
 import styled from "@emotion/styled"
-import {  color, flex, grid, layout, order, space, typography } from "styled-system"
+import {  border, color, flex, grid, layout, order, space, typography } from "styled-system"
 import Popular from "../layout/PopularSong"
 import { useEffect, useState } from "react";
 import {fetchUser} from "../utils/firebase/handlSubmit";
@@ -96,6 +96,7 @@ const SearchAndButton = styled.div`
 
 const DeletedMessage = styled.div`
       color:black;
+      ${color}
 `
 
 const Button = styled.div`
@@ -117,6 +118,8 @@ const DeleteContainer = styled.div`
     padding:5px;
     border-radius:10px;
     margin-top:5px;
+    ${color}
+    ${border}
 `
 
 
@@ -130,7 +133,9 @@ function Home() {
   
   const [modalOpen,setModalOpen] = useState()
   const [showDeleteMessage,setShowDeletedMessage] = useState(false)
+  const [showSongMessage,setShowSongMessage] = useState(false)
 
+  
   useEffect(()=>{
     dispatch(fetchUserList());
     dispatch(fetchSongList())
@@ -153,6 +158,15 @@ function Home() {
       }, 5000); // Hide message after 1 minute (60000 milliseconds)
     }
 
+    const AddSong = localStorage.getItem('song');
+    if (AddSong) {
+      setShowSongMessage(true);
+      clearSongData(); // Remove deleted data from local storage
+      setTimeout(() => {
+        setShowSongMessage(false);
+      }, 5000); // Hide message after 1 minute (60000 milliseconds)
+    }
+
     },[dispatch])
     
 
@@ -160,6 +174,12 @@ function Home() {
     const clearDeletedData = () => {
       localStorage.removeItem("deletedData");
     };
+    
+
+    const clearSongData = () => {
+      localStorage.removeItem("song");
+    };
+
 
     const openModal = ()=>{
       setModalOpen(true)
@@ -216,11 +236,19 @@ function Home() {
       <StyledContainer order={[2,2,2,2]}>
         {showDeleteMessage &&
         <DeleteContainer>
-        <DeletedMessage className="bg-red-300 text-red p-3">A song has been deleted.{" "}
+        <DeletedMessage color="green">A song has been deleted.{" "}
         </DeletedMessage>
         <Button onClick={() => handleUndoDelete()}>Undo</Button>
 
         </DeleteContainer>
+        }
+
+        {
+          showSongMessage &&
+          <DeleteContainer bg="white" border="1px solid green">
+          <DeletedMessage className="bg-green-300 text-green p-3">A song has been added.{" "}
+          </DeletedMessage>
+          </DeleteContainer>
         }
         
 

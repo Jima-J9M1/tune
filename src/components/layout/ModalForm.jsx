@@ -39,7 +39,6 @@ const ModalForm = ({modalOpen, closeModal}) =>{
     const navigate = useNavigate();
 
     const [data, setData] = useState({
-        name:"",
         title:"",
         artist:"",
         body:"",
@@ -48,7 +47,6 @@ const ModalForm = ({modalOpen, closeModal}) =>{
       })
 
     const [error, setError] = useState({
-      name:"",
       title:"",
       artist:"",
       body:"",
@@ -86,10 +84,10 @@ const ModalForm = ({modalOpen, closeModal}) =>{
     
       //  Submit the input data
       const handle_submit = async () => {
-        if(data.name === "" || data.title === "" || data.artist === "" || data.body === "" || file.image === "" || file.audio === ""){
-          setError({...error, name:"Please fill in all the fields"})
+        if(data.title === "" || data.artist === "" || data.body === "" || file.image === "" || file.audio === ""){
+          setError({...error, title:"Please fill in all the fields"})
         }else{
-        if(error.name === "" && error.title === "" && error.artist === "" && error.body === "" && error.image === "" && error.audio === ""){
+        if(error.title === "" && error.artist === "" && error.body === "" && error.image === "" && error.audio === ""){
           setLoading(true)
           const url = await handleSubmit(data, file.image,file.audio)
           setData({
@@ -101,6 +99,7 @@ const ModalForm = ({modalOpen, closeModal}) =>{
 
           setLoading(false)
           closeModal()
+          localStorage.setItem("song","song Added Successfully")
           navigate('/')
 
 
@@ -173,7 +172,7 @@ const ModalForm = ({modalOpen, closeModal}) =>{
       }
     }
     
-
+   
 
     
    return ( 
@@ -186,9 +185,9 @@ const ModalForm = ({modalOpen, closeModal}) =>{
             <GrClose color="#fff" size={20} onClick={closeModal} cursor="pointer"/>
        
       </HeaderStyle>
-      <Title fontSize={15} fontWeight={300} >Name</Title>
+      {/* <Title fontSize={15} fontWeight={300} >Name</Title>
       <Input onChange={handleChange('name')} p={12} bg="white" fontSize={15} placeholder="@name" color="black" width={3/4} required/>
-      {error.name && <ErrorShow color="red" fontSize={15}>{error.name}</ErrorShow>}
+      {error.name && <ErrorShow color="red" fontSize={15}>{error.name}</ErrorShow>} */}
       
       <Title fontSize={15} fontWeight={300}>Title</Title>
       <Input p={12} bg="white" fontSize={15} placeholder="@Title_of_the_song" color="black" width={3/4} onChange={handleChange('title')} required/>
